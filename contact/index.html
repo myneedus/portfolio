@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <h1>Contact </h1>
     <nav>
         <ul>
             <li><a href="../">Home</a></li>
@@ -15,5 +15,20 @@
             <li><a href="https://github.com/myneedus" target="_blank">GitHub</a></li>
         </ul>
     </nav>
+
+    <h1>Contact</h1>
+
+    <form action="mailto:smyneedu@ucsd.edu" method="POST" enctype="text/plain">
+        <label>Email:
+            <input type="email" name="email">
+        </label>
+        <label>Subject:
+            <input name="subject">
+        </label>
+        <label>Body:
+            <textarea name="body"></textarea>
+        </label>
+        <button>Submit</button>
+    </form>
 </body>
 </html>
