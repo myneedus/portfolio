@@ -95,3 +95,29 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.1;
   text-wrap: balance;
 }
+section h2 {
+  margin-top: 1.5em;
+  padding-bottom: 0.2em;
+  border-bottom: 2px solid var(--color-accent);
+}
+
+section article {
+  margin-bottom: 1.5em;
+}
+
+article header h3 {
+  margin: 0;
+}
+
+article header p {
+  margin: 0;
+  color: oklch(45% 0 0);
+}
+
+article ul {
+  margin-top: 0.5em;
+}
+
+time {
+  font-style: italic;
+}
