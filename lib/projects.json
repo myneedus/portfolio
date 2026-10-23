@@ -1,0 +1,75 @@
+[
+  {
+    "title": "Personal Portfolio Website",
+    "year": "2026",
+    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
+    "description": "A hand-built website using HTML, CSS, and JavaScript."
+  },
+  {
+    "title": "Data Visualization Project",
+    "year": "2026",
+    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
+    "description": "A chart-based visualization exploring a public dataset."
+  },
+  {
+    "title": "Review Website",
+    "year": "2026",
+    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
+    "description": "A small web app where users can submit and browse reviews."
+  },
+  {
+    "title": "Image Processing Tool",
+    "year": "2025",
+    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
+    "description": "A Python tool that applies basic image effects."
+  },
+  {
+    "title": "Mobile App Prototype",
+    "year": "2025",
+    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
+    "description": "An early prototype of a simple mobile app."
+  },
+  {
+    "title": "Data Screening Script",
+    "year": "2025",
+    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
+    "description": "A script that filters a large table of records by set criteria."
+  },
+  {
+    "title": "Probability Simulations",
+    "year": "2025",
+    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
+    "description": "Simulations built to explore probability concepts."
+  },
+  {
+    "title": "Workshop Materials",
+    "year": "2025",
+    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
+    "description": "Slides and handouts for a short workshop."
+  },
+  {
+    "title": "Recommendation Engine",
+    "year": "2024",
+    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
+    "description": "A program that suggests similar items based on shared features."
+  },
+  {
+    "title": "Data Structures Library",
+    "year": "2024",
+    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
+    "description": "Common data structures implemented from scratch."
+  },
+  {
+    "title": "Exploratory Data Analysis Notebook",
+    "year": "2024",
+    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
+    "description": "A notebook that cleans and visualizes a public dataset."
+  },
+  {
+    "title": "Business Plan Draft",
+    "year": "2023",
+    "image": "https://dsc106.com/labs/lab02/images/empty.svg",
+    "description": "A written plan for a community-focused idea."
+  }
+]
+
