@@ -18,12 +18,12 @@ img {
   height: auto;
 }
 
-nav u1, 
+nav ul,
 nav li {
-  display:contents;
+  display: contents;
 }
 
-nav{
+nav {
   display: flex;
   margin-bottom: 1em;
   border-bottom: 1px solid oklch(80% 3% 200);
