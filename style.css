@@ -160,3 +160,23 @@ select { /* add select */
   font-size: 80%;
   font-family: inherit;
 }
+
+#profile-stats dl {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5em;
+  margin: 0;
+}
+
+#profile-stats dt {
+  grid-row: 1;
+  font-size: 80%;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+#profile-stats dd {
+  grid-row: 2;
+  margin: 0;
+  font-size: 2em;
+}
