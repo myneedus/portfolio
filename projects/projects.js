@@ -5,6 +5,15 @@ const projects = await fetchJSON('../lib/projects.json');
 const projectsContainer = document.querySelector('.projects');
 const searchInput = document.querySelector('.searchBar');
 const title = document.querySelector('.projects-title');
+let currentQuery = '';
+let selectedIndex = -1;
+let selectedYear = null;
+
+function selectYear(year, index) {
+    selectedIndex = selectedYear === year ? -1 : index;
+    selectedYear = selectedIndex === -1 ? null : year;
+    updateProjects(currentQuery);
+}
 
 function renderPieChart(projectsGiven) {
     const rolledData = d3.rollups(
@@ -22,6 +31,9 @@ function renderPieChart(projectsGiven) {
     const colors = d3.scaleOrdinal(d3.schemeTableau10);
     const plot = d3.select('#projects-plot');
     const legend = d3.select('.legend');
+    selectedIndex = selectedYear === null
+        ? -1
+        : data.findIndex((datum) => datum.label === selectedYear);
 
     plot.selectAll('path').remove();
     legend.selectAll('li').remove();
@@ -31,12 +43,42 @@ function renderPieChart(projectsGiven) {
         .join('path')
         .attr('d', arcGenerator)
         .attr('fill', (_, index) => colors(index));
+    plot.selectAll('path')
+        .attr('class', (arc) => arc.data.label === selectedYear ? 'selected' : null)
+        .attr('role', 'button')
+        .attr('tabindex', 0)
+        .attr('aria-label', (arc) => `${arc.data.label}: ${arc.data.value} projects`)
+        .attr('aria-pressed', (arc) => arc.data.label === selectedYear)
+        .on('click', (_, arc) => selectYear(arc.data.label, arc.index))
+        .on('keydown', (event, arc) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                selectYear(arc.data.label, arc.index);
+            }
+        });
 
     legend.selectAll('li')
         .data(data)
         .join('li')
-        .attr('class', 'legend-item')
+        .attr('class', (datum) => (
+            datum.label === selectedYear ? 'legend-item selected' : 'legend-item'
+        ))
         .attr('style', (_, index) => `--color:${colors(index)}`)
+        .attr('role', 'button')
+        .attr('tabindex', 0)
+        .attr('aria-pressed', (datum) => datum.label === selectedYear)
+        .on('click', (_, datum) => (
+            selectYear(datum.label, data.findIndex((item) => item.label === datum.label))
+        ))
+        .on('keydown', (event, datum) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                selectYear(
+                    datum.label,
+                    data.findIndex((item) => item.label === datum.label),
+                );
+            }
+        })
         .each(function (d) {
             const item = d3.select(this);
             item.append('span').attr('class', 'swatch');
@@ -46,17 +88,21 @@ function renderPieChart(projectsGiven) {
 }
 
 function updateProjects(query) {
+    currentQuery = query;
     const normalizedQuery = query.toLowerCase();
-    const filteredProjects = projects.filter((project) => {
+    const searchFilteredProjects = projects.filter((project) => {
         const values = Object.values(project).join('\n').toLowerCase();
         return values.includes(normalizedQuery);
     });
+    const visibleProjects = selectedYear === null
+        ? searchFilteredProjects
+        : searchFilteredProjects.filter((project) => project.year === selectedYear);
 
-    renderProjects(filteredProjects, projectsContainer, 'h2');
-    renderPieChart(filteredProjects);
+    renderProjects(visibleProjects, projectsContainer, 'h2');
+    renderPieChart(searchFilteredProjects);
 
     if (title) {
-        title.textContent = `${filteredProjects.length} Projects`;
+        title.textContent = `${visibleProjects.length} Projects`;
     }
 }
 

@@ -129,6 +129,37 @@ form button {
   border-radius: 0.2em;
 }
 
+#projects-plot path {
+  cursor: pointer;
+  transition: opacity 300ms, fill 300ms;
+}
+
+#projects-plot:has(path:hover) path:not(:hover) {
+  opacity: 0.5;
+}
+
+.selected {
+  --color: oklch(60% 45% 0) !important;
+}
+
+#projects-plot path.selected {
+  fill: var(--color);
+}
+
+.legend-item {
+  cursor: pointer;
+}
+
+.legend-item.selected {
+  background-color: color-mix(in oklch, var(--color), canvas 85%);
+}
+
+.legend-item:focus-visible,
+#projects-plot path:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
 h1 {
   font-size: 400%;
 }
