@@ -87,10 +87,46 @@ form button {
   margin: 0;
 }
 
+.chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2em;
+}
+
 #projects-plot {
-  max-width: 20em;
+  flex: 0 1 20em;
+  width: 20em;
+  max-width: 100%;
   margin-block: 2em;
   overflow: visible;
+}
+
+.legend {
+  display: grid;
+  flex: 1 1 20em;
+  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
+  gap: 1em;
+  margin: 0;
+  padding: 1em;
+  border: 1px solid oklch(80% 3% 200);
+  list-style: none;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  min-width: 9em;
+}
+
+.swatch {
+  display: inline-block;
+  width: 1em;
+  aspect-ratio: 1;
+  flex: none;
+  background-color: var(--color);
+  border-radius: 0.2em;
 }
 
 h1 {
