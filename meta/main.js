@@ -85,6 +85,11 @@ function renderScatterPlot(commits) {
   const yScale = d3.scaleLinear()
     .domain([0, 24])
     .range([usableArea.bottom, usableArea.top]);
+  const [minLines, maxLines] = d3.extent(commits, (commit) => commit.totalLines);
+  const rScale = d3.scaleSqrt()
+    .domain([minLines, maxLines])
+    .range([2, 30]);
+  const sortedCommits = d3.sort(commits, (commit) => -commit.totalLines);
   const svg = d3.select('#chart')
     .append('svg')
     .attr('viewBox', `0 0 ${width} ${height}`)
@@ -99,18 +104,21 @@ function renderScatterPlot(commits) {
   svg.append('g')
     .attr('class', 'dots')
     .selectAll('circle')
-    .data(commits)
+    .data(sortedCommits)
     .join('circle')
     .attr('cx', (commit) => xScale(commit.datetime))
     .attr('cy', (commit) => yScale(commit.hourFrac))
-    .attr('r', 5)
+    .attr('r', (commit) => rScale(commit.totalLines))
     .attr('fill', 'steelblue')
+    .style('fill-opacity', 0.7)
     .on('mouseenter', (event, commit) => {
+      d3.select(event.currentTarget).style('fill-opacity', 1);
       renderTooltipContent(commit);
       updateTooltipVisibility(true);
       updateTooltipPosition(event);
     })
-    .on('mouseleave', () => {
+    .on('mouseleave', (event) => {
+      d3.select(event.currentTarget).style('fill-opacity', 0.7);
       updateTooltipVisibility(false);
     });
 
