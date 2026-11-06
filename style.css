@@ -234,21 +234,24 @@ select { /* add select */
   font-family: inherit;
 }
 
-#profile-stats dl {
+#profile-stats dl,
+.stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.5em;
   margin: 0;
 }
 
-#profile-stats dt {
+#profile-stats dt,
+.stats dt {
   grid-row: 1;
   font-size: 80%;
   text-transform: uppercase;
   opacity: 0.7;
 }
 
-#profile-stats dd {
+#profile-stats dd,
+.stats dd {
   grid-row: 2;
   margin: 0;
   font-size: 2em;
