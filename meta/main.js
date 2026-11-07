@@ -34,12 +34,32 @@ function processCommits(data) {
 }
 
 function renderCommitInfo(data, commits) {
-  const dl = d3.select('#stats').append('dl').attr('class', 'stats');
+  const fileCount = d3.group(data, (row) => row.file).size;
+  const averageLineLength = d3.mean(data, (row) => row.length);
+  const maxDepth = d3.max(data, (row) => row.depth);
+  const workByDay = d3.rollups(
+    data,
+    (lines) => lines.length,
+    (row) => row.datetime.toLocaleDateString('en', { weekday: 'long' }),
+  );
+  const busiestDay = d3.greatest(workByDay, ([, count]) => count);
+  const statistics = [
+    ['Total LOC', data.length],
+    ['Total commits', commits.length],
+    ['Number of files', fileCount],
+    ['Average line length', `${d3.format('.1f')(averageLineLength)} characters`],
+    ['Maximum depth', maxDepth],
+    ['Most active day', `${busiestDay[0]} (${busiestDay[1]} lines)`],
+  ];
+  const dl = d3.select('#stats')
+    .append('dl')
+    .attr('class', 'stats summary-stats');
 
-  dl.append('dt').html('Total <abbr title="Lines of code">LOC</abbr>');
-  dl.append('dd').text(data.length);
-  dl.append('dt').text('Total commits');
-  dl.append('dd').text(commits.length);
+  for (const [label, value] of statistics) {
+    const stat = dl.append('div').attr('class', 'stat');
+    stat.append('dt').text(label);
+    stat.append('dd').text(value);
+  }
 }
 
 function renderTooltipContent(commit) {

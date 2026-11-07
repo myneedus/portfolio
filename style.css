@@ -257,6 +257,19 @@ select { /* add select */
   font-size: 2em;
 }
 
+#stats .summary-stats {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10em), 1fr));
+}
+
+.summary-stats .stat {
+  display: grid;
+  gap: 0.25em;
+}
+
+.summary-stats dd {
+  font-size: 1.5em;
+}
+
 #chart svg {
   display: block;
   width: 100%;
