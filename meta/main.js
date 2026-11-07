@@ -66,6 +66,41 @@ function updateTooltipPosition(event) {
   tooltip.style.top = `${event.clientY}px`;
 }
 
+function isCommitSelected(selection, commit, xScale, yScale) {
+  if (!selection) {
+    return false;
+  }
+
+  const [[x0, y0], [x1, y1]] = selection;
+  const x = xScale(commit.datetime);
+  const y = yScale(commit.hourFrac);
+  return x0 <= x && x <= x1 && y0 <= y && y <= y1;
+}
+
+function renderSelectionCount(selectedCommits) {
+  document.getElementById('selection-count').textContent = selectedCommits.length
+    ? `${selectedCommits.length} commits selected`
+    : 'No commits selected';
+}
+
+function renderLanguageBreakdown(selectedCommits) {
+  const container = d3.select('#language-breakdown');
+  container.selectAll('*').remove();
+
+  if (selectedCommits.length === 0) {
+    return;
+  }
+
+  const lines = selectedCommits.flatMap((commit) => commit.lines);
+  const breakdown = d3.rollup(lines, (entries) => entries.length, (line) => line.type);
+
+  for (const [language, count] of breakdown) {
+    container.append('dt').text(language);
+    container.append('dd')
+      .text(`${count} lines (${d3.format('.1~%')(count / lines.length)})`);
+  }
+}
+
 function renderScatterPlot(commits) {
   const width = 1000;
   const height = 600;
@@ -130,6 +165,27 @@ function renderScatterPlot(commits) {
     .attr('transform', `translate(${usableArea.left}, 0)`)
     .call(d3.axisLeft(yScale)
       .tickFormat((hour) => `${String(hour % 24).padStart(2, '0')}:00`));
+
+  const brush = d3.brush()
+    .extent([
+      [usableArea.left, usableArea.top],
+      [usableArea.right, usableArea.bottom],
+    ])
+    .on('start brush end', (event) => {
+      const selectedCommits = event.selection
+        ? commits.filter((commit) => (
+          isCommitSelected(event.selection, commit, xScale, yScale)
+        ))
+        : [];
+
+      svg.selectAll('.dots circle')
+        .classed('selected', (commit) => selectedCommits.includes(commit));
+      renderSelectionCount(selectedCommits);
+      renderLanguageBreakdown(selectedCommits);
+    });
+
+  svg.call(brush);
+  svg.selectAll('.dots, .overlay ~ *').raise();
 }
 
 const data = await loadData();

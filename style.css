@@ -319,3 +319,16 @@ dl.info[hidden] {
 #chart circle:hover {
   transform: scale(1.5);
 }
+
+#chart circle.selected {
+  fill: #ff6b6b;
+}
+
+#language-breakdown {
+  grid-template-columns: max-content 1fr;
+}
+
+#language-breakdown dt,
+#language-breakdown dd {
+  grid-row: auto;
+}
