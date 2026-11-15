@@ -1,5 +1,12 @@
 [
   {
+    "title": "Bikewatching",
+    "year": "2026",
+    "image": "./images/bikewatching.png",
+    "description": "An interactive Mapbox and D3 visualization of Boston-area bike stations, traffic volume, and flow.",
+    "url": "https://myneedus.github.io/bikewatching/"
+  },
+  {
     "title": "Personal Portfolio Website",
     "year": "2026",
     "image": "https://dsc106.com/labs/lab02/images/empty.svg",
@@ -72,4 +79,3 @@
     "description": "A written plan for a community-focused idea."
   }
 ]
-

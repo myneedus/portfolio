@@ -104,15 +104,30 @@ export function renderProjects(project, containerElement, headingLevel = 'h2') {
 
   for (let p of project) {
     const article = document.createElement('article');
+    const heading = document.createElement(headingLevel);
+    const image = document.createElement('img');
+    const details = document.createElement('div');
+    const description = document.createElement('p');
+    const year = document.createElement('p');
+    const date = document.createElement('time');
 
-    article.innerHTML = `
-      <${headingLevel}>${p.title}</${headingLevel}>
-      <img src="${p.image}" alt="${p.title}">
-      <div>
-        <p>${p.description}</p>
-        <p><time datetime="${p.year}">${p.year}</time></p>
-      </div>
-    `;
+    if (p.url) {
+      const link = document.createElement('a');
+      link.href = p.url;
+      link.textContent = p.title;
+      heading.append(link);
+    } else {
+      heading.textContent = p.title;
+    }
+
+    image.src = new URL(p.image, import.meta.url).href;
+    image.alt = p.title;
+    description.textContent = p.description;
+    date.dateTime = p.year;
+    date.textContent = p.year;
+    year.append(date);
+    details.append(description, year);
+    article.append(heading, image, details);
 
     containerElement.appendChild(article);
   }
