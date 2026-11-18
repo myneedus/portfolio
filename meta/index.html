@@ -18,13 +18,18 @@
     <dt>Date</dt>
     <dd id="commit-date"></dd>
     <dt>Time</dt>
-    <dd id="commit-time"></dd>
+    <dd id="commit-tooltip-time"></dd>
     <dt>Author</dt>
     <dd id="commit-author"></dd>
     <dt>Lines edited</dt>
     <dd id="commit-lines"></dd>
   </dl>
   <h2>Commits by time of day</h2>
+  <label>
+    Show commits until:
+    <input type="range" id="commit-progress" min="0" max="100" value="100">
+    <time id="commit-time"></time>
+  </label>
   <p id="selection-count" aria-live="polite">No commits selected</p>
   <div id="chart"></div>
   <h2>Selected commit languages</h2>

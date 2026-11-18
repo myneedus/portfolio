@@ -324,9 +324,12 @@ dl.info[hidden] {
 }
 
 #chart circle {
-  transition: transform 200ms;
+  transition: r 300ms, transform 200ms;
   transform-origin: center;
   transform-box: fill-box;
+  @starting-style {
+    r: 0;
+  }
 }
 
 #chart circle:hover {
