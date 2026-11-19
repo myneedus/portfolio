@@ -301,7 +301,10 @@ function updateFileDisplay(filteredCommits) {
   filesContainer
     .select('dd')
     .selectAll('div.loc')
-    .data((file) => file.lines)
+    .data(
+      (file) => file.lines,
+      (line) => `${line.commit}:${line.file}:${line.line}:${line.type}`,
+    )
     .join('div')
     .attr('class', 'loc')
     .attr('style', (line) => `--color: ${colors(line.type)}`);
@@ -343,6 +346,10 @@ d3.select('#scatter-story')
 
 function onStepEnter(response) {
   const commit = response.element.__data__;
+  updateVisualizationForCommit(commit);
+}
+
+function updateVisualizationForCommit(commit) {
   commitMaxTime = commit.datetime;
   commitProgress = timeScale(commitMaxTime);
 
@@ -361,6 +368,10 @@ function onStepEnter(response) {
   updateFileDisplay(filteredCommits);
 }
 
+function onFileStepEnter(response) {
+  updateVisualizationForCommit(response.element.__data__);
+}
+
 const scroller = scrollama();
 scroller
   .setup({
@@ -368,3 +379,42 @@ scroller
     step: '#scrolly-1 .step',
   })
   .onStepEnter(onStepEnter);
+
+d3.select('#files-story')
+  .selectAll('.step')
+  .data(commits)
+  .join('div')
+  .attr('class', 'step')
+  .html((commit, index) => {
+    const cumulativeLines = commits
+      .filter((item) => item.datetime <= commit.datetime)
+      .flatMap((item) => item.lines);
+    const fileCount = d3.rollups(
+      cumulativeLines,
+      (lines) => lines.length,
+      (line) => line.file,
+    ).length;
+    const changedFileCount = d3.rollups(
+      commit.lines,
+      (lines) => lines.length,
+      (line) => line.file,
+    ).length;
+
+    return `
+      ${index === 0 ? 'At the start,' : 'By this commit,'}
+      the project had
+      <strong>${cumulativeLines.length} lines across ${fileCount} ${
+        fileCount === 1 ? 'file' : 'files'
+      }</strong>
+      and changed ${changedFileCount} ${changedFileCount === 1 ? 'file' : 'files'} in
+      <a href="${commit.url}" target="_blank" rel="noopener noreferrer">this commit</a>.
+    `;
+  });
+
+const fileScroller = scrollama();
+fileScroller
+  .setup({
+    container: '#scrolly-2',
+    step: '#scrolly-2 .step',
+  })
+  .onStepEnter(onFileStepEnter);

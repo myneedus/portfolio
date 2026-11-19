@@ -307,6 +307,38 @@ select { /* add select */
   overflow: auto;
 }
 
+#scrolly-2 {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+#scrolly-2 > * {
+  flex: 1;
+  min-width: 0;
+}
+
+#files-story {
+  position: relative;
+}
+
+#files-story .step {
+  min-height: 70vh;
+  padding: 2rem 1rem;
+  display: grid;
+  align-content: center;
+  border-bottom: 1px solid oklch(80% 3% 200 / 35%);
+}
+
+#files-plot {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: 50vh;
+  overflow: auto;
+}
+
 .gridlines line {
   stroke: currentColor;
   stroke-opacity: 0.15;
