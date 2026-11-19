@@ -282,6 +282,10 @@ select { /* add select */
   gap: 1rem;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 #scrolly-1 > * {
   flex: 1;
   min-width: 0;

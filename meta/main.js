@@ -270,7 +270,6 @@ function onTimeSliderChange() {
 
   const filteredData = filteredCommits.flatMap((commit) => commit.lines);
   renderCommitInfo(filteredData, filteredCommits);
-  updateFileDisplay(filteredCommits);
 }
 
 function updateFileDisplay(filteredCommits) {
@@ -325,6 +324,7 @@ document.getElementById('commit-progress')
   .addEventListener('input', onTimeSliderChange);
 onTimeSliderChange();
 updateFileDisplay(commits);
+document.getElementById('files-plot').hidden = true;
 
 d3.select('#scatter-story')
   .selectAll('.step')
@@ -346,10 +346,13 @@ d3.select('#scatter-story')
 
 function onStepEnter(response) {
   const commit = response.element.__data__;
-  updateVisualizationForCommit(commit);
+  updateCommitVisualizationForCommit(commit);
+  document.getElementById('scatter-plot').hidden = false;
+  document.getElementById('commit-languages').hidden = false;
+  document.getElementById('files-plot').hidden = true;
 }
 
-function updateVisualizationForCommit(commit) {
+function updateCommitVisualizationForCommit(commit) {
   commitMaxTime = commit.datetime;
   commitProgress = timeScale(commitMaxTime);
 
@@ -365,11 +368,15 @@ function updateVisualizationForCommit(commit) {
 
   const filteredData = filteredCommits.flatMap((item) => item.lines);
   renderCommitInfo(filteredData, filteredCommits);
-  updateFileDisplay(filteredCommits);
 }
 
 function onFileStepEnter(response) {
-  updateVisualizationForCommit(response.element.__data__);
+  const commit = response.element.__data__;
+  filteredCommits = commits.filter((item) => item.datetime <= commit.datetime);
+  updateFileDisplay(filteredCommits);
+  document.getElementById('scatter-plot').hidden = true;
+  document.getElementById('commit-languages').hidden = true;
+  document.getElementById('files-plot').hidden = false;
 }
 
 const scroller = scrollama();
