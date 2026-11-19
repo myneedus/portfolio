@@ -276,6 +276,37 @@ select { /* add select */
   height: auto;
 }
 
+#scrolly-1 {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+}
+
+#scrolly-1 > * {
+  flex: 1;
+  min-width: 0;
+}
+
+#scatter-story {
+  position: relative;
+}
+
+#scatter-story .step {
+  min-height: 70vh;
+  padding: 2rem 1rem;
+  display: grid;
+  align-content: center;
+  border-bottom: 1px solid oklch(80% 3% 200 / 35%);
+}
+
+#scatter-plot {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: 50vh;
+  overflow: auto;
+}
+
 .gridlines line {
   stroke: currentColor;
   stroke-opacity: 0.15;
@@ -347,4 +378,52 @@ dl.info[hidden] {
 #language-breakdown dt,
 #language-breakdown dd {
   grid-row: auto;
+}
+
+#files {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  margin-top: 2em;
+}
+
+#files > div {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  border-top: 1px solid oklch(80% 3% 200 / 50%);
+  padding-block: 0.5em;
+}
+
+#files dt {
+  grid-column: 1;
+  min-width: 0;
+}
+
+#files dt code {
+  overflow-wrap: anywhere;
+}
+
+#files dt small {
+  display: block;
+  color: oklch(55% 0 0);
+  font-size: 75%;
+}
+
+#files dd {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  align-content: start;
+  gap: 0.15em;
+  margin: 0;
+  padding-top: 0.6em;
+}
+
+.loc {
+  display: flex;
+  width: 0.5em;
+  aspect-ratio: 1;
+  background: var(--color, steelblue);
+  border-radius: 50%;
 }
