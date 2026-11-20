@@ -221,7 +221,9 @@ function renderScatterPlot(commits) {
       renderLanguageBreakdown(selectedCommits);
     });
 
-  svg.call(brush);
+  svg.append('g')
+    .attr('class', 'brush')
+    .call(brush);
   svg.selectAll('.dots, .overlay ~ *').raise();
 }
 
